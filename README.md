@@ -1,10 +1,10 @@
 I'm a student who loves to make life easier with code.
 
-### Familiar with
+## Familiar with
 - JavaScript
 - Python
 
-### Learning
+## Learning
 - TypeScript
 - Go
 - Rust
