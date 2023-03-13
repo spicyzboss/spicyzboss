@@ -11,4 +11,6 @@ I'm a student who loves to make life easier with code.
 - AWS
 
 ## Stats
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=spicyzboss&layout=compact&langs_count=10)](https://github.com/anuraghazra/github-readme-stats)
+[![Langs](https://raw.githubusercontent.com/spicyzboss/stats/output/generated/languages.svg)](https://github.com/spicyzboss/stats)
+
+[![Stats](https://raw.githubusercontent.com/spicyzboss/stats/output/generated/overview.svg)](https://github.com/spicyzboss/stats)
