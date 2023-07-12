@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "spicyz",
+  "short_name": "spicyz",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f1f0ec",
+  "theme_color": "#f1f0ec",
+  "description": "spicyzboss' website"
+}

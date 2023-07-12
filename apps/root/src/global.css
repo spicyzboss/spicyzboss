@@ -1,0 +1,16 @@
+body {
+  height: 100dvh;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.title {
+  font-size: 2rem;
+  font-family: system-ui;
+  font-weight: bold;
+}
