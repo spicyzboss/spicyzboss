@@ -9,7 +9,10 @@
       "options": {
         "runSequence": [
           "root:build.client",
-          "root:build.ssr"
+          "root:build.ssr",
+          "root:build.functions",
+          "root:build.cloudflare",
+          "root:build.bundle"
         ],
         "outputPath": "dist/apps/root"
       },
@@ -37,7 +40,7 @@
         }
       }
     },
-    "build-functions": {
+    "build.functions": {
       "executor": "nx:run-commands",
       "options": {
         "command": "cp -r apps/root/functions/ dist/apps/root/functions"
@@ -46,7 +49,7 @@
         "build"
       ]
     },
-    "build-server": {
+    "build.cloudflare": {
       "executor": "@nrwl/vite:build",
       "options": {
         "outputPath": "dist/apps/root",
@@ -56,7 +59,7 @@
         "build"
       ]
     },
-    "export": {
+    "build.bundle": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
@@ -69,8 +72,8 @@
         "parallel": false
       },
       "dependsOn": [
-        "build-server",
-        "build-functions"
+        "build.cloudflare",
+        "build.functions"
       ]
     },
     "preview": {

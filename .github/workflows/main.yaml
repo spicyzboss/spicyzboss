@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  main:
+    name: Nx Cloud - Main Job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.13.0
+        with:
+          number-of-agents: 3
+          parallel-commands: |
+            pnpm nx-cloud record -- pnpm nx format:check
+          parallel-commands-on-agents: |
+            pnpm nx affected -t lint --parallel=3 &\
+            pnpm nx affected -t test --parallel=3 --configuration=ci &\
+            pnpm nx affected -t build --parallel=3
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: dist/
+
+  agents:
+    name: Nx Cloud - Agents
+    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.13.0
+    with:
+      number-of-agents: 3
