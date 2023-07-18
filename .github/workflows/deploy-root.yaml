@@ -29,5 +29,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          workingDirectory: dist/apps/root/deploy/
+          workingDirectory: apps/root/deploy/
           command: pages publish --project-name=${{ secrets.CF_PROJECT_ROOT_NAME }} --skip-caching
