@@ -20,6 +20,8 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           name: build
+          check_artifacts: true
+          search_artifacts: true
           workflow: main.yaml
           if_no_artifact_found: fail
 
