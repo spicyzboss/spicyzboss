@@ -1,0 +1,16 @@
+[package]
+name = "api_create_transaction"
+version.workspace = true
+edition.workspace = true
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+core_finance = { path = "../../../libs/core_finance/" }
+worker = { workspace = true }
+hyper = { workspace = true }
+serde_json = { workspace = true }

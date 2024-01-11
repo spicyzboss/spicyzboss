@@ -1,0 +1,58 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "cargo prisma"
+  output   = "../src/infrastructure/db_gen.rs"
+}
+
+model Transaction {
+  id                String   @id @map("id")
+  transactionTypeId Int      @map("transaction_type_id")
+  amount            Int      @map("amount")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @default(now()) @map("updated_at")
+
+  tags TagsOnTransaction[]
+
+  type TransactionType @relation(fields: [transactionTypeId], references: [id])
+
+  @@map("transactions")
+}
+
+model TransactionType {
+  id        Int      @id @default(autoincrement()) @map("id")
+  name      String   @map("name")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  transactions Transaction[]
+
+  @@map("transaction_types")
+}
+
+model Tags {
+  id        Int      @id @default(autoincrement()) @map("id")
+  name      String   @unique @map("name")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  transactions TagsOnTransaction[]
+
+  @@map("tags")
+}
+
+model TagsOnTransaction {
+  transactionId String   @map("transaction_id")
+  tagId         Int      @map("tag_id")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @default(now()) @map("updated_at")
+
+  transaction Transaction @relation(fields: [transactionId], references: [id])
+  tags        Tags        @relation(fields: [tagId], references: [id])
+
+  @@id([transactionId, tagId])
+  @@map("transactions_tags")
+}
