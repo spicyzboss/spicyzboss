@@ -14,9 +14,9 @@ I'm currently working at [IT KMITL Deep Tech](https://github.com/deeptech-kmitl)
 <details>
   <summary>Stats</summary>
 
-[![Langs](https://raw.githubusercontent.com/spicyzboss/stats/output/generated/languages.svg)](https://github.com/spicyzboss/stats)
+![Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=spicyzboss&size_weight=0.5&count_weight=0.5&hide=css,html&langs_count=10&layout=compact&theme=transparent)
 
-[![Stats](https://raw.githubusercontent.com/spicyzboss/stats/output/generated/overview.svg)](https://github.com/spicyzboss/stats)
+![Stats](https://github-readme-stats.vercel.app/api?username=spicyzboss&show_icons=true&theme=transparent)
 
 </details>
 
