@@ -100,7 +100,7 @@
     "deploy": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "wrangler pages deploy dist/apps/web/root --project-name=spicyz"
+        "command": "wrangler pages deploy dist/apps/root --project-name=spicyz"
       }
     },
     "preview": {
