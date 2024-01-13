@@ -5,6 +5,7 @@ My name is [Supachai Kheawjuy](https://spicyz.io). I'm now [KMITL](https://kmitl
 I'm currently working at [IT KMITL Deep Tech](https://github.com/deeptech-kmitl). Mostly working on Full-Stack Development, and workspace management with [Nx](https://nx.dev/).
 
 ### Stacks 📚
+
 - JavaScript & TypeScript: [Next](https://nextjs.org/), [Qwik](https://qwik.builder.io/), [Nuxt](https://nuxt.com/), [Nest](https://nestjs.com/), [Express](https://expressjs.com/)
 - Rust: [Worker](https://github.com/cloudflare/workers-rs), [Actix](https://actix.rs/)
 - Go: [Fiber](https://gofiber.io/)
@@ -12,7 +13,7 @@ I'm currently working at [IT KMITL Deep Tech](https://github.com/deeptech-kmitl)
 - Cloud: [GCP](https://cloud.google.com/), [AWS](https://aws.amazon.com/)
 
 <details>
-  <summary>Stats</summary>
+  <summary><h3>Stats</h3></summary>
 
 ![Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=spicyzboss&size_weight=0.5&count_weight=0.5&hide=css,html&langs_count=10&layout=compact&theme=transparent)
 
