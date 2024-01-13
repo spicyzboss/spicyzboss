@@ -16,6 +16,12 @@
         ],
         "outputPath": "dist/apps/root"
       },
+      "dependsOn": [
+        {
+          "target": "build.pwa",
+          "params": "ignore"
+        }
+      ],
       "configurations": {
         "preview": {}
       }
@@ -49,6 +55,21 @@
         "build"
       ]
     },
+    "build.pwa": {
+      "inputs": [
+        "{projectRoot}/pwa-assets.config.ts",
+        "{projectRoot}/public/assets/logo.png"
+      ],
+      "outputs": [
+        "{projectRoot}/public/assets/*",
+        "!{projectRoot}/public/assets/logo.png"
+      ],
+      "executor": "nx:run-script",
+      "cache": true,
+      "options": {
+        "script": "generate-pwa-assets"
+      }
+    },
     "build.cloudflare": {
       "executor": "@nrwl/vite:build",
       "options": {
@@ -76,6 +97,12 @@
         "build.functions"
       ]
     },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "wrangler pages deploy dist/apps/web/root --project-name=spicyz"
+      }
+    },
     "preview": {
       "executor": "@nx/vite:preview-server",
       "options": {
@@ -86,7 +113,7 @@
     "test": {
       "executor": "@nx/vite:test",
       "outputs": [
-        "../../coverage/apps/root"
+        "../coverage/apps/root"
       ],
       "options": {
         "passWithNoTests": true,
@@ -109,15 +136,10 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": [
         "{options.outputFile}"
-      ],
-      "options": {
-        "lintFilePatterns": [
-          "apps/root/**/*.{ts,tsx,js,jsx}"
-        ]
-      }
+      ]
     }
   },
   "tags": []

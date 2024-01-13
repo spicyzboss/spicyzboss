@@ -1,16 +1,9 @@
-body {
-  height: 100dvh;
-}
+@import 'tailwindcss/base';
+@import './themes/default.css';
 
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-.title {
-  font-size: 2rem;
-  font-family: system-ui;
-  font-weight: bold;
+html, body {
+  @apply h-full bg-surface text-surface-on;
 }
