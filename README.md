@@ -1,8 +1,10 @@
 ### Hi there 👋
 
-My name is [Supachai Kheawjuy](https://spicyz.io). I'm now [KMITL](https://kmitl.ac.th/) senior student who loves to solve the problems but not loves the problems.
+My name is [Supachai Kheawjuy](https://spicyz.io).
+I'm now [KMITL](https://kmitl.ac.th/) senior student who loves to solve the problems but not loves the problems.
 
-I'm currently working at [IT KMITL Deep Tech](https://github.com/deeptech-kmitl). Mostly working on Full-Stack Development, and workspace management with [Nx](https://nx.dev/).
+I'm currently working at [IT KMITL Deep Tech](https://github.com/deeptech-kmitl).
+Mostly working on Full-Stack Development, and workspace management with [Nx](https://nx.dev/).
 
 ### Stacks 📚
 
