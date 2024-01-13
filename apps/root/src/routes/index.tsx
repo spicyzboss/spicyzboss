@@ -16,7 +16,7 @@ export default component$(() => {
       </p>
       <div class="mt-4 gap-4 flex">
         <Button href="https://cal.com/spicyz/meeting" target="_blank">
-          Book meeting
+          Book a chat
         </Button>
         <Button
           variant="secondary"
