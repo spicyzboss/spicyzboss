@@ -1,0 +1,14 @@
+[package]
+name = "core_finance"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+worker = { workspace = true }
+hyper = { workspace = true }
+async-trait = "0.1.73"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1", features = ["fast-rng", "v4", "js", "serde"] }
+futures = "0.3.29"
+wasm-bindgen = "0.2.86"
