@@ -43,7 +43,7 @@ export default component$(() => {
         </noscript>
         <RouterHead />
       </head>
-      <body lang="en">
+      <body>
         <RouterOutlet />
         <ServiceWorkerRegister nonce={nonce} />
       </body>
