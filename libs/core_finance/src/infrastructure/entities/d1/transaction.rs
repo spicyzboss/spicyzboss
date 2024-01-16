@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
-use crate::domain::entities::Transaction;
+use crate::domain::{entities::Transaction, repositories::PaginationResult};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct D1Transaction {
@@ -31,7 +31,11 @@ impl From<Vec<D1Transaction>> for Transaction {
           })
           .tags
           .as_mut()
-          .map(|tags| if let Some(tag) = transaction.tag { tags.push(tag) });
+          .map(|tags| {
+            if let Some(tag) = transaction.tag {
+              tags.push(tag)
+            }
+          });
 
         acc
       })
@@ -41,5 +45,40 @@ impl From<Vec<D1Transaction>> for Transaction {
       .get(0)
       .unwrap()
       .clone()
+  }
+}
+
+impl From<Vec<D1Transaction>> for PaginationResult<Transaction> {
+  fn from(transactions: Vec<D1Transaction>) -> PaginationResult<Transaction> {
+    PaginationResult {
+      total: transactions.len() as i64,
+      items: transactions
+        .into_iter()
+        .fold(BTreeMap::new(), |mut acc, transaction| {
+          acc
+            .entry(transaction.id.clone())
+            .or_insert_with(|| Transaction {
+              id: transaction.id,
+              r#type: transaction.r#type,
+              amount: transaction.amount,
+              tags: Some(Vec::new()),
+              created_at: transaction.created_at,
+              updated_at: transaction.updated_at,
+            })
+            .tags
+            .as_mut()
+            .map(|tags| {
+              if let Some(tag) = transaction.tag {
+                tags.push(tag)
+              }
+            });
+
+          acc
+        })
+        .into_iter()
+        .map(|(_, v)| v)
+        .collect::<Vec<Transaction>>()
+        .clone(),
+    }
   }
 }

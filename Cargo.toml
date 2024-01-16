@@ -1,5 +1,5 @@
 [workspace]
-members = ["tools/prisma_cli", "apps/api_finance/create_transaction", "libs/core_finance"]
+members = ["tools/prisma_cli", "apps/api_finance/root", "apps/api_finance/transaction", "libs/core_finance"]
 resolver = "2"
 
 [workspace.package]
@@ -15,4 +15,4 @@ codegen-units = 1
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 worker = { version = "0.0.18", features = ["d1"] }
-hyper = "0.14"
+hyper = "1.1"

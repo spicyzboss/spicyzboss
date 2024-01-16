@@ -55,30 +55,26 @@ impl TransactionRepository for TransactionD1Repository {
       Err(e) => return Err(D1RepositoryError::from(e).into_inner()),
     }
 
+    // TODO: This is a bad way to do this, should batch these statements
     if let Some(tags) = new_transaction.tags {
-      let create_txn_tag_statement = self.db.prepare(
-        "
-        INSERT INTO transactions_tags (transaction_id, tag_id)
-        VALUES (?1, ?2);
-        ",
-      );
-
       let txn_tag_queries = tags
-        .into_iter()
+        .iter()
         .map(|tag| {
-          let txn_tag_query = create_txn_tag_statement
-            .bind(&[id.clone().into(), tag.into()])
+          let create_txn_tag_statement = self.db.prepare(
+            "
+            INSERT INTO transactions_tags (transaction_id, tag_id)
+            VALUES (?1, ?2);
+            ",
+          );
+
+          create_txn_tag_statement
+            .bind(&[id.clone().into(), tag.clone().into()])
             .map_err(|v| D1RepositoryError::from(v).into_inner())
-            .expect("noice");
-
-          Box::pin(txn_tag_query.run())
+            .unwrap()
         })
-        .collect::<Vec<_>>();
+        .map(|query| async move { query.run().await });
 
-      match future::select_all(txn_tag_queries).await {
-        (Ok(_), _index, _remaining) => {}
-        (Err(e), _index, _remaining) => return Err(D1RepositoryError::from(e).into_inner()),
-      }
+      future::join_all(txn_tag_queries).await;
     }
 
     let result = self
@@ -131,13 +127,31 @@ impl TransactionRepository for TransactionD1Repository {
 
   async fn list(
     &self,
-    params: TransactionQueryParams,
+    _params: TransactionQueryParams,
   ) -> RepositoryResult<PaginationResult<Transaction>> {
-    let statement = self.db.prepare("SELECT * FROM transactions LIMIT (?1)");
+    let statement = self.db.prepare(
+      "
+      SELECT
+        t.id,
+        t.transaction_type_id,
+        t.amount,
+        t.created_at,
+        t.updated_at,
+        tg.name 'tag',
+        (
+          SELECT tt.name
+          FROM transaction_types as tt
+          WHERE tt.id = t.transaction_type_id
+        ) 'type'
+      FROM transactions as t
+      LEFT JOIN transactions_tags as tot
+      ON t.id = tot.transaction_id
+      LEFT JOIN tags as tg
+      ON tg.id = tot.tag_id
+      ",
+    );
 
-    let query = statement
-      .bind(&[params.limit.into()])
-      .expect("statement binding error");
+    let query = statement.bind(&[]).expect("statement binding error");
 
     let option_result_with_err = query
       .all()
@@ -145,12 +159,9 @@ impl TransactionRepository for TransactionD1Repository {
       .map_err(|v| D1RepositoryError::from(v).into_inner())?;
 
     let result = option_result_with_err
-      .results::<Transaction>()
+      .results::<D1Transaction>()
       .map_err(|v| D1RepositoryError::from(v).into_inner())?;
 
-    Ok(PaginationResult {
-      total: result.len() as i64,
-      items: result.into_iter().map(|v| v.into()).collect(),
-    })
+    Ok(result.into())
   }
 }

@@ -1,10 +1,10 @@
-name = "api_finance"
+name = "api_finance_transaction"
 main = "build/worker/shim.mjs"
 compatibility_date = "2023-03-22"
 
 workers_dev = false
 routes = [
-	{ pattern = "api.finance.spicyz.io", custom_domain = true }
+	{ pattern = "api.finance.spicyz.io/transactions*", zone_name = "spicyz.io" }
 ]
 
 [build]
