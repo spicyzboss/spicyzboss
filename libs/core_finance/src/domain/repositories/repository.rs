@@ -5,8 +5,11 @@ pub type RepositoryResult<T> = Result<T, RepositoryError>;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct PaginationResult<T> {
-  pub total: i64,
   pub items: Vec<T>,
+  // pub page: i64,
+  // pub per_page: i64,
+  pub total: i64,
+  // pub page_count: i64,
 }
 
 pub const DEFAULT_OFFSET: Option<i64> = Some(0);

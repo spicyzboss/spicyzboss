@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Clone)]
-pub struct TransactionType {
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub struct D1TransactionType {
   pub id: i32,
   pub name: String,
   pub created_at: String,

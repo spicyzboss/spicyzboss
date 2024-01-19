@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Transaction {
   pub id: String,
-  pub r#type: Option<String>,
+  pub r#type: String,
   pub amount: i32,
   pub tags: Option<Vec<String>>,
   pub created_at: String,

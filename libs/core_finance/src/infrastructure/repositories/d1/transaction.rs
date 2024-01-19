@@ -9,11 +9,11 @@ use crate::{
   },
   infrastructure::{errors::D1RepositoryError, D1Transaction},
 };
+
+use async_trait::async_trait;
 use futures::future;
 use uuid::Uuid;
 use worker::D1Database;
-
-use async_trait::async_trait;
 
 pub struct TransactionD1Repository {
   pub db: Arc<D1Database>,
@@ -33,14 +33,14 @@ impl TransactionRepository for TransactionD1Repository {
   ) -> RepositoryResult<Transaction> {
     let id = Uuid::new_v4().to_string();
 
-    let create_txn_statement = self.db.prepare(
+    let create_transaction_statement = self.db.prepare(
       "
       INSERT INTO transactions (id, amount, transaction_type_id)
       VALUES (?1, ?2, ?3);
       ",
     );
 
-    let txn_query = create_txn_statement
+    let transaction_query = create_transaction_statement
       .bind(&[
         id.clone().into(),
         new_transaction.amount.into(),
@@ -48,33 +48,33 @@ impl TransactionRepository for TransactionD1Repository {
       ])
       .map_err(|v| D1RepositoryError::from(v).into_inner())?;
 
-    let txn_query_result = txn_query.run().await;
+    let transaction_query_result = transaction_query.run().await;
 
-    match txn_query_result {
+    match transaction_query_result {
       Ok(_) => {}
       Err(e) => return Err(D1RepositoryError::from(e).into_inner()),
     }
 
     // TODO: This is a bad way to do this, should batch these statements
     if let Some(tags) = new_transaction.tags {
-      let txn_tag_queries = tags
+      let transaction_tag_queries = tags
         .iter()
         .map(|tag| {
-          let create_txn_tag_statement = self.db.prepare(
+          let create_transaction_tag_statement = self.db.prepare(
             "
             INSERT INTO transactions_tags (transaction_id, tag_id)
             VALUES (?1, ?2);
             ",
           );
 
-          create_txn_tag_statement
+          create_transaction_tag_statement
             .bind(&[id.clone().into(), tag.clone().into()])
             .map_err(|v| D1RepositoryError::from(v).into_inner())
             .unwrap()
         })
         .map(|query| async move { query.run().await });
 
-      future::join_all(txn_tag_queries).await;
+      future::join_all(transaction_tag_queries).await;
     }
 
     let result = self
@@ -90,36 +90,33 @@ impl TransactionRepository for TransactionD1Repository {
       "
       SELECT
         t.id,
-        t.transaction_type_id,
+        type.name 'type',
         t.amount,
-        t.created_at,
-        t.updated_at,
-        tg.name 'tag',
         (
-          SELECT tt.name
-          FROM transaction_types as tt
-          WHERE tt.id = t.transaction_type_id
-        ) 'type'
+          SELECT GROUP_CONCAT(tg.name)
+          FROM tags as tg
+          JOIN transactions_tags as ttg
+          ON ttg.tag_id = tg.id
+          WHERE ttg.transaction_id = t.id
+        ) 'tags',
+        t.created_at,
+        t.updated_at
       FROM transactions as t
-      LEFT JOIN transactions_tags as tot
-      ON t.id = tot.transaction_id
-      LEFT JOIN tags as tg
-      ON tg.id = tot.tag_id
-      WHERE t.id = ?1;
+      JOIN transaction_types as type
+      ON t.transaction_type_id = type.id
+      WHERE t.id = ?1
       ",
     );
 
     let query = statement
-      .bind(&[transaction_id.into()])
+      .bind(&[transaction_id.clone().into()])
       .map_err(|v| D1RepositoryError::from(v).into_inner())?;
 
-    let option_result_with_err = query
-      .all()
+    let result = query
+      .first::<D1Transaction>(None)
       .await
-      .map_err(|v| D1RepositoryError::from(v).into_inner())?;
-
-    let result = option_result_with_err
-      .results::<D1Transaction>()
+      .map_err(|v| D1RepositoryError::from(v).into_inner())?
+      .ok_or(String::from("Transaction not found"))
       .map_err(|v| D1RepositoryError::from(v).into_inner())?;
 
     Ok(result.into())
@@ -133,35 +130,39 @@ impl TransactionRepository for TransactionD1Repository {
       "
       SELECT
         t.id,
-        t.transaction_type_id,
+        type.name 'type',
         t.amount,
-        t.created_at,
-        t.updated_at,
-        tg.name 'tag',
         (
-          SELECT tt.name
-          FROM transaction_types as tt
-          WHERE tt.id = t.transaction_type_id
-        ) 'type'
+          SELECT GROUP_CONCAT(tg.name)
+          FROM tags as tg
+          JOIN transactions_tags as ttg
+          ON ttg.tag_id = tg.id
+          WHERE ttg.transaction_id = t.id
+        ) 'tags',
+        t.created_at,
+        t.updated_at
       FROM transactions as t
-      LEFT JOIN transactions_tags as tot
-      ON t.id = tot.transaction_id
-      LEFT JOIN tags as tg
-      ON tg.id = tot.tag_id
+      JOIN transaction_types as type
+      ON t.transaction_type_id = type.id
       ",
     );
 
-    let query = statement.bind(&[]).expect("statement binding error");
+    let query = statement
+      .bind(&[])
+      .map_err(|v| D1RepositoryError::from(v).into_inner())?;
 
-    let option_result_with_err = query
+    let d1_result = query
       .all()
       .await
       .map_err(|v| D1RepositoryError::from(v).into_inner())?;
 
-    let result = option_result_with_err
+    let result = d1_result
       .results::<D1Transaction>()
       .map_err(|v| D1RepositoryError::from(v).into_inner())?;
 
-    Ok(result.into())
+    Ok(PaginationResult {
+      total: result.len() as i64,
+      items: result.into_iter().map(|v| v.into()).collect(),
+    })
   }
 }
