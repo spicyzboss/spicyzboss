@@ -1,1 +1,3 @@
 # https://developers.cloudflare.com/pages/platform/redirects/
+
+/.well-known/nostr.json https://archive.spicyz.io/nostr.json 302
