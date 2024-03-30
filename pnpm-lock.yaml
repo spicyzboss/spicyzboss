@@ -4,100 +4,105 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-devDependencies:
-  '@builder.io/qwik':
-    specifier: ^1.5.1
-    version: 1.5.1(@types/node@20.12.2)(undici@6.10.2)
-  '@builder.io/qwik-city':
-    specifier: ^1.5.1
-    version: 1.5.1(@types/node@20.12.2)
-  '@iconify/json':
-    specifier: ^2.2.196
-    version: 2.2.196
-  '@iconify/tailwind':
-    specifier: ^0.1.4
-    version: 0.1.4
-  '@nx/eslint':
-    specifier: 18.2.1
-    version: 18.2.1(@types/node@20.12.2)(nx@18.2.1)
-  '@nx/eslint-plugin':
-    specifier: 18.2.1
-    version: 18.2.1(@types/node@20.12.2)(@typescript-eslint/parser@7.4.0)(eslint-config-prettier@9.1.0)(eslint@8.57.0)(nx@18.2.1)(typescript@5.4.3)
-  '@nx/js':
-    specifier: 18.2.1
-    version: 18.2.1(@types/node@20.12.2)(nx@18.2.1)(typescript@5.4.3)
-  '@nx/vite':
-    specifier: 18.2.1
-    version: 18.2.1(@types/node@20.12.2)(nx@18.2.1)(typescript@5.4.3)(vite@5.2.7)(vitest@1.4.0)
-  '@nx/workspace':
-    specifier: 18.2.1
-    version: 18.2.1
-  '@nxrs/cargo':
-    specifier: ^0.4.0
-    version: 0.4.0(@nrwl/devkit@18.2.1)
-  '@types/node':
-    specifier: ^20.12.2
-    version: 20.12.2
-  '@typescript-eslint/eslint-plugin':
-    specifier: 7.4.0
-    version: 7.4.0(@typescript-eslint/parser@7.4.0)(eslint@8.57.0)(typescript@5.4.3)
-  '@typescript-eslint/parser':
-    specifier: 7.4.0
-    version: 7.4.0(eslint@8.57.0)(typescript@5.4.3)
-  '@vite-pwa/assets-generator':
-    specifier: ^0.2.4
-    version: 0.2.4
-  '@vitest/ui':
-    specifier: 1.4.0
-    version: 1.4.0(vitest@1.4.0)
-  autoprefixer:
-    specifier: ^10.4.19
-    version: 10.4.19(postcss@8.4.38)
-  eslint:
-    specifier: 8.57.0
-    version: 8.57.0
-  eslint-config-prettier:
-    specifier: 9.1.0
-    version: 9.1.0(eslint@8.57.0)
-  eslint-plugin-qwik:
-    specifier: ^1.5.1
-    version: 1.5.1(eslint@8.57.0)
-  nx:
-    specifier: 18.2.1
-    version: 18.2.1
-  nx-cloud:
-    specifier: ^18.0.0
-    version: 18.0.0
-  postcss:
-    specifier: ^8.4.38
-    version: 8.4.38
-  prettier:
-    specifier: ^3.2.5
-    version: 3.2.5
-  prisma:
-    specifier: ^5.11.0
-    version: 5.11.0
-  qwik-nx:
-    specifier: ^2.2.1
-    version: 2.2.1(@nx/devkit@18.2.1)(@nx/eslint@18.2.1)(@nx/js@18.2.1)(@nx/vite@18.2.1)
-  tailwindcss:
-    specifier: ^3.4.3
-    version: 3.4.3
-  typescript:
-    specifier: ^5.4.3
-    version: 5.4.3
-  vite:
-    specifier: 5.2.7
-    version: 5.2.7(@types/node@20.12.2)
-  vite-tsconfig-paths:
-    specifier: ^4.3.2
-    version: 4.3.2(typescript@5.4.3)(vite@5.2.7)
-  vitest:
-    specifier: 1.4.0
-    version: 1.4.0(@types/node@20.12.2)(@vitest/ui@1.4.0)
-  wrangler:
-    specifier: ^3.41.0
-    version: 3.41.0
+importers:
+
+  .:
+    devDependencies:
+      '@builder.io/qwik':
+        specifier: ^1.5.1
+        version: 1.5.1(@types/node@20.12.2)(undici@6.10.2)
+      '@builder.io/qwik-city':
+        specifier: ^1.5.1
+        version: 1.5.1(@types/node@20.12.2)
+      '@iconify/json':
+        specifier: ^2.2.196
+        version: 2.2.196
+      '@iconify/tailwind':
+        specifier: ^0.1.4
+        version: 0.1.4
+      '@nx/eslint':
+        specifier: 18.2.1
+        version: 18.2.1(@types/node@20.12.2)(nx@18.2.1)
+      '@nx/eslint-plugin':
+        specifier: 18.2.1
+        version: 18.2.1(@types/node@20.12.2)(@typescript-eslint/parser@7.4.0)(eslint-config-prettier@9.1.0)(eslint@8.57.0)(nx@18.2.1)(typescript@5.4.3)
+      '@nx/js':
+        specifier: 18.2.1
+        version: 18.2.1(@types/node@20.12.2)(nx@18.2.1)(typescript@5.4.3)
+      '@nx/vite':
+        specifier: 18.2.1
+        version: 18.2.1(@types/node@20.12.2)(nx@18.2.1)(typescript@5.4.3)(vite@5.2.7)(vitest@1.4.0)
+      '@nx/workspace':
+        specifier: 18.2.1
+        version: 18.2.1
+      '@nxrs/cargo':
+        specifier: ^0.4.0
+        version: 0.4.0(@nrwl/devkit@18.2.1)
+      '@types/node':
+        specifier: ^20.12.2
+        version: 20.12.2
+      '@typescript-eslint/eslint-plugin':
+        specifier: 7.4.0
+        version: 7.4.0(@typescript-eslint/parser@7.4.0)(eslint@8.57.0)(typescript@5.4.3)
+      '@typescript-eslint/parser':
+        specifier: 7.4.0
+        version: 7.4.0(eslint@8.57.0)(typescript@5.4.3)
+      '@vite-pwa/assets-generator':
+        specifier: ^0.2.4
+        version: 0.2.4
+      '@vitest/ui':
+        specifier: 1.4.0
+        version: 1.4.0(vitest@1.4.0)
+      autoprefixer:
+        specifier: ^10.4.19
+        version: 10.4.19(postcss@8.4.38)
+      eslint:
+        specifier: 8.57.0
+        version: 8.57.0
+      eslint-config-prettier:
+        specifier: 9.1.0
+        version: 9.1.0(eslint@8.57.0)
+      eslint-plugin-qwik:
+        specifier: ^1.5.1
+        version: 1.5.1(eslint@8.57.0)
+      nx:
+        specifier: 18.2.1
+        version: 18.2.1
+      nx-cloud:
+        specifier: ^18.0.0
+        version: 18.0.0
+      postcss:
+        specifier: ^8.4.38
+        version: 8.4.38
+      prettier:
+        specifier: ^3.2.5
+        version: 3.2.5
+      prisma:
+        specifier: ^5.11.0
+        version: 5.11.0
+      qwik-nx:
+        specifier: ^2.2.1
+        version: 2.2.1(@nx/devkit@18.2.1)(@nx/eslint@18.2.1)(@nx/js@18.2.1)(@nx/vite@18.2.1)
+      tailwindcss:
+        specifier: ^3.4.3
+        version: 3.4.3
+      typescript:
+        specifier: ^5.4.3
+        version: 5.4.3
+      vite:
+        specifier: 5.2.7
+        version: 5.2.7(@types/node@20.12.2)
+      vite-tsconfig-paths:
+        specifier: ^4.3.2
+        version: 4.3.2(typescript@5.4.3)(vite@5.2.7)
+      vitest:
+        specifier: 1.4.0
+        version: 1.4.0(@types/node@20.12.2)(@vitest/ui@1.4.0)
+      wrangler:
+        specifier: ^3.41.0
+        version: 3.41.0
+
+  apps/root: {}
 
 packages:
 
