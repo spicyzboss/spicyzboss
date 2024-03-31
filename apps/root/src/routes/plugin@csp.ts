@@ -1,11 +1,11 @@
 import type { RequestHandler } from '@builder.io/qwik-city';
 import { isDev } from '@builder.io/qwik/build';
 
-export const onRequest: RequestHandler = (event) => {
+export const onRequest: RequestHandler = ({ request, sharedMap, headers }) => {
   if (isDev) return;
 
-  const nonce = event.request.headers.get('cf-ray') || Date.now().toString(36);
-  event.sharedMap.set('@nonce', nonce);
+  const nonce = request.headers.get('cf-ray') || Date.now().toString(36);
+  sharedMap.set('@nonce', nonce);
 
   const csp = [
     `default-src 'self' 'unsafe-inline'`,
@@ -18,5 +18,5 @@ export const onRequest: RequestHandler = (event) => {
     "base-uri 'self'",
   ];
 
-  event.headers.set('Content-Security-Policy', csp.join('; '));
+  headers.set('Content-Security-Policy', csp.join('; '));
 };
