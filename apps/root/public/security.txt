@@ -1,5 +1,24 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
 Contact: mailto:security@spicyz.io
 Expires: 2024-06-30T16:59:00.000Z
 Encryption: https://keys.openpgp.org/vks/v1/by-email/supachai@spicyz.io
 Preferred-Languages: en, th
 Canonical: https://spicyz.io/security.txt
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEYdgQAVRaM8yuOiCgc5abHh40CTkFAmYI1l8ACgkQc5abHh40
+CTkZixAAkIjhOZbaF/L8WwYdBiNiAFuyeLlt4HnHdtN90UG9hByQ97vmfOu9iItf
+kl9fmGX81AlthgQ2Up2kRHqCKq/GwyqZpWWzqSFUU1OnvqCTf3B1RZ9FB2zKBWu9
+0aXxJxXkVlKsGpIWgR0k08qSoF/dOezyK69XteJVXHhnxCouqCB4LUNFT+wk4L+9
+yL6jTBgZUPMCDg/Q3DntDBxrEv3c9XqAvvB+PCHa81zAOr6YU5M0gx/tFTUvUBl/
+39zngi4jFDaXxJOMrga+9WOzxcQTsAWmKd0ZHY6QsQ0Vq0Lor8vbItQcI1r5ulQU
+6x1ULfj+VEFqY+L8n50TgnAHktbeIWyLGvnzrMzrFvpOJcW9dZLjARjZYGWkIom+
+Hrbg+Qb4Tk9NepX7KeQCT9FkZmHQBhxwZxFhNo2lRBQl0yb/xrEXIik8pXy/3ZEI
+cS7WDdt++XILi0m1JYtHXBbaH51tbStBnX5GHA8VijikVT4ugaLOpPNOLDaJ5B33
+0M9fcUN++7uMM15jqzkm0KaUHkWf7z5I6qNlWvVL/PfTGHrW7WJV+hbWIhK/CiVz
+MxkMWLsQuw+twGvFXnQDs5OGjV2V+xOZHpQeIMV070Ijn0Mch8HQdO4lnONKosqr
+Z+e3085PoMPy6rUcBOxRFq5yPu3wOg9l4PmGrjMdfvfqe0jYMso=
+=YCG6
+-----END PGP SIGNATURE-----
