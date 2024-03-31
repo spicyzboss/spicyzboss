@@ -16,7 +16,7 @@ export const onRequest: RequestHandler = ({ headers }) => {
     'X-Frame-Options': 'sameorigin',
     'X-XSS-Protection': '1; mode=block',
     'Referrer-Policy': 'same-origin',
-    'Permissions-Policy': permissions.join('; '),
+    'Permissions-Policy': permissions.join(', '),
   };
 
   Object.entries(securityHeaders).map(([key, value]) => headers.set(key, value));
