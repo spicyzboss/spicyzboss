@@ -1,2 +1,2 @@
 [alias]
-prisma = "run -p prisma_cli --"
+prisma = "run -p prisma_client_rust --"

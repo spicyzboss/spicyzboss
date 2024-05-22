@@ -1,0 +1,20 @@
+name = "api_finance_tag"
+main = "build/worker/shim.mjs"
+compatibility_date = "2023-03-22"
+
+workers_dev = false
+routes = [
+	{ pattern = "api.finance.spicyz.io/tags*", zone_name = "spicyz.io" }
+]
+
+[build]
+command = "worker-build --release"
+
+[placement]
+mode = "smart"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "finance"
+database_id = "f7ddbdad-fec3-4205-b6af-88b232e6c7d9"
+migrations_dir = "../../components/databases/d1/migrations"

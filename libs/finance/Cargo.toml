@@ -1,0 +1,15 @@
+[package]
+name = "finance"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+axum = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+worker = { workspace = true }
+async-trait = "0.1.73"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1", features = ["fast-rng", "v7", "js"] }
+futures = "0.3.29"
+wasm-bindgen = "0.2.86"

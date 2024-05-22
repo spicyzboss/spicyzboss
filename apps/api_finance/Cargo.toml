@@ -1,0 +1,15 @@
+[package]
+name = "api_finance"
+version.workspace = true
+edition.workspace = true
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = true
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+axum = { workspace = true }
+finance = { workspace = true }
+worker = { workspace = true }
