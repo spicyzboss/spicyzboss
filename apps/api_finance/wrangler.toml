@@ -4,7 +4,7 @@ compatibility_date = "2024-05-13"
 
 workers_dev = false
 routes = [
-	{ pattern = "api.finance.spicyz.io/*", zone_name = "spicyz.io" }
+	{ pattern = "api.finance.spicyz.io", zone_name = "spicyz.io", custom_domain = true }
 ]
 
 [build]
