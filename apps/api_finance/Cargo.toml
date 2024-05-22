@@ -6,6 +6,11 @@ edition.workspace = true
 [package.metadata.wasm-pack.profile.release]
 wasm-opt = true
 
+[profile.release]
+lto = true
+strip = true
+codegen-units = 1
+
 [lib]
 crate-type = ["cdylib"]
 
