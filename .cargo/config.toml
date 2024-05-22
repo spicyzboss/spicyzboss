@@ -1,2 +1,0 @@
-[alias]
-prisma = "run -p prisma_client_rust --"
