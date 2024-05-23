@@ -10,6 +10,9 @@ routes = [
 [build]
 command = "worker-build --release"
 
+[vars]
+AUTH_KEY = "AUTH_KEY"
+
 [placement]
 mode = "smart"
 

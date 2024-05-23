@@ -1,6 +1,6 @@
 use std::{collections::HashMap, sync::Arc};
 
-use worker::{Request, Response, Result, RouteContext};
+use worker::{Env, Request, Response, Result};
 
 use crate::{
   api::CategoryCreateParamsDTO,
@@ -9,8 +9,9 @@ use crate::{
   usecases::CategoryUsecase,
 };
 
-pub async fn list_categories(req: Request, ctx: RouteContext<()>) -> Result<Response> {
-  let db = Arc::new(ctx.env.d1("DB").expect("no d1 binding"));
+#[worker::send]
+pub async fn list_categories(req: Request, env: Env) -> Result<Response> {
+  let db = Arc::new(env.d1("DB").expect("no d1 binding"));
   let repo = Arc::new(CategoryD1Repository::new(db.clone()));
   let usecase = Arc::new(CategoryUsecase::new(repo.clone()));
 
@@ -42,12 +43,20 @@ pub async fn list_categories(req: Request, ctx: RouteContext<()>) -> Result<Resp
   }
 }
 
-pub async fn retrieve_category(_req: Request, ctx: RouteContext<()>) -> Result<Response> {
-  let db = Arc::new(ctx.env.d1("DB").expect("no d1 binding"));
+#[worker::send]
+pub async fn get_category(req: Request, env: Env) -> Result<Response> {
+  let db = Arc::new(env.d1("DB").expect("no d1 binding"));
   let repo = Arc::new(CategoryD1Repository::new(db.clone()));
   let usecase = Arc::new(CategoryUsecase::new(repo.clone()));
 
-  let category_id = ctx.param("id").unwrap().to_string();
+  let url = req.url()?;
+
+  let category_id = url
+    .path_segments()
+    .unwrap()
+    .nth(1)
+    .unwrap()
+    .parse::<String>()?;
   let result = usecase.repository.retrieve(category_id).await;
 
   match result {
@@ -60,8 +69,9 @@ pub async fn retrieve_category(_req: Request, ctx: RouteContext<()>) -> Result<R
   }
 }
 
-pub async fn create_category(mut req: Request, ctx: RouteContext<()>) -> Result<Response> {
-  let db = Arc::new(ctx.env.d1("DB").expect("no d1 binding"));
+#[worker::send]
+pub async fn create_category(mut req: Request, env: Env) -> Result<Response> {
+  let db = Arc::new(env.d1("DB").expect("no d1 binding"));
   let repo = Arc::new(CategoryD1Repository::new(db.clone()));
   let usecase = Arc::new(CategoryUsecase::new(repo.clone()));
 

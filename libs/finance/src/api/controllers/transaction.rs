@@ -1,6 +1,6 @@
 use std::{collections::HashMap, sync::Arc};
 
-use worker::{Request, Response, Result, RouteContext};
+use worker::{Env, Request, Response, Result};
 
 use crate::{
   api::TransactionCreateParamsDTO,
@@ -9,8 +9,9 @@ use crate::{
   usecases::TransactionUsecase,
 };
 
-pub async fn list_transactions(req: Request, ctx: RouteContext<()>) -> Result<Response> {
-  let db = Arc::new(ctx.env.d1("DB").expect("no d1 binding"));
+#[worker::send]
+pub async fn list_transactions(req: Request, env: Env) -> Result<Response> {
+  let db = Arc::new(env.d1("DB").expect("no d1 binding"));
   let repo = Arc::new(TransactionD1Repository::new(db.clone()));
   let usecase = Arc::new(TransactionUsecase::new(repo.clone()));
 
@@ -51,12 +52,21 @@ pub async fn list_transactions(req: Request, ctx: RouteContext<()>) -> Result<Re
   }
 }
 
-pub async fn retrieve_transaction(_req: Request, ctx: RouteContext<()>) -> Result<Response> {
-  let db = Arc::new(ctx.env.d1("DB").expect("no d1 binding"));
+#[worker::send]
+pub async fn get_transaction(req: Request, env: Env) -> Result<Response> {
+  let db = Arc::new(env.d1("DB").expect("no d1 binding"));
   let repo = Arc::new(TransactionD1Repository::new(db.clone()));
   let usecase = Arc::new(TransactionUsecase::new(repo.clone()));
 
-  let transaction_id = ctx.param("id").unwrap().to_string();
+  let url = req.url()?;
+
+  let transaction_id = url
+    .path_segments()
+    .unwrap()
+    .nth(1)
+    .unwrap()
+    .parse::<String>()?;
+
   let result = usecase.repository.retrieve(transaction_id).await;
 
   match result {
@@ -69,8 +79,9 @@ pub async fn retrieve_transaction(_req: Request, ctx: RouteContext<()>) -> Resul
   }
 }
 
-pub async fn create_transaction(mut req: Request, ctx: RouteContext<()>) -> Result<Response> {
-  let db = Arc::new(ctx.env.d1("DB").expect("no d1 binding"));
+#[worker::send]
+pub async fn create_transaction(mut req: Request, env: Env) -> Result<Response> {
+  let db = Arc::new(env.d1("DB").expect("no d1 binding"));
   let repo = Arc::new(TransactionD1Repository::new(db.clone()));
   let usecase = Arc::new(TransactionUsecase::new(repo.clone()));
 

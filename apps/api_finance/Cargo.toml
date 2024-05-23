@@ -18,3 +18,5 @@ crate-type = ["cdylib"]
 axum = { workspace = true }
 finance = { workspace = true }
 worker = { workspace = true }
+console_error_panic_hook = "0.1.7"
+tower-service = "0.3.2"

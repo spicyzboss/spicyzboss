@@ -1,6 +1,6 @@
 use std::{collections::HashMap, sync::Arc};
 
-use worker::{Request, Response, Result, RouteContext};
+use worker::{Env, Request, Response, Result};
 
 use crate::{
   api::TagCreateParamsDTO,
@@ -9,8 +9,9 @@ use crate::{
   usecases::TagUsecase,
 };
 
-pub async fn list_tags(req: Request, ctx: RouteContext<()>) -> Result<Response> {
-  let db = Arc::new(ctx.env.d1("DB").expect("no d1 binding"));
+#[worker::send]
+pub async fn list_tags(req: Request, env: Env) -> Result<Response> {
+  let db = Arc::new(env.d1("DB").expect("no d1 binding"));
   let repo = Arc::new(TagD1Repository::new(db.clone()));
   let usecase = Arc::new(TagUsecase::new(repo.clone()));
 
@@ -42,12 +43,20 @@ pub async fn list_tags(req: Request, ctx: RouteContext<()>) -> Result<Response> 
   }
 }
 
-pub async fn retrieve_tag(_req: Request, ctx: RouteContext<()>) -> Result<Response> {
-  let db = Arc::new(ctx.env.d1("DB").expect("no d1 binding"));
+#[worker::send]
+pub async fn get_tag(req: Request, env: Env) -> Result<Response> {
+  let db = Arc::new(env.d1("DB").expect("no d1 binding"));
   let repo = Arc::new(TagD1Repository::new(db.clone()));
   let usecase = Arc::new(TagUsecase::new(repo.clone()));
 
-  let tag_id = ctx.param("id").unwrap().to_string();
+  let url = req.url()?;
+
+  let tag_id = url
+    .path_segments()
+    .unwrap()
+    .nth(1)
+    .unwrap()
+    .parse::<String>()?;
   let result = usecase.repository.retrieve(tag_id).await;
 
   match result {
@@ -60,8 +69,9 @@ pub async fn retrieve_tag(_req: Request, ctx: RouteContext<()>) -> Result<Respon
   }
 }
 
-pub async fn create_tag(mut req: Request, ctx: RouteContext<()>) -> Result<Response> {
-  let db = Arc::new(ctx.env.d1("DB").expect("no d1 binding"));
+#[worker::send]
+pub async fn create_tag(mut req: Request, env: Env) -> Result<Response> {
+  let db = Arc::new(env.d1("DB").expect("no d1 binding"));
   let repo = Arc::new(TagD1Repository::new(db.clone()));
   let usecase = Arc::new(TagUsecase::new(repo.clone()));
 
