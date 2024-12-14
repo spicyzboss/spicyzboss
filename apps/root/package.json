@@ -77,7 +77,7 @@
         "options": {
           "commands": [
             "mkdir -p dist/apps/root/deploy/",
-            "cp -r dist/apps/root/client/* dist/apps/root/deploy/",
+            "cp -r dist/apps/root/client/. dist/apps/root/deploy/",
             "cp -r dist/apps/root/functions/ dist/apps/root/deploy/functions/",
             "cp -r dist/apps/root/server/ dist/apps/root/deploy/server/",
             "echo 'Exported to dist/apps/root/deploy'"
