@@ -1,4 +1,4 @@
-Hi there 👋, I'm [spicyz](https://spicyz.io), Fullstack Developer at [100x](https://100x.fi/) based in Bangkok, Thailand.
+Hi there 👋, I'm Boss, Fullstack Developer at [100x](https://100x.fi/) based in Bangkok, Thailand.
 
 <p align="center">
   <samp>
